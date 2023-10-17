@@ -1,0 +1,56 @@
+Reducer is hook like state. Sometime, we have more complex state - for example if it
+got multiple states, multiple ways of changing it or dependencies to other states.
+In such cases, useState() often becomes hard or error prone to use - it is easy to
+write bad, inefficient or buggy code in such scenarios. useReducer() is an alternative
+of useState() if we need more powerfull state management.
+    We can use it in login page where lot of state are managed individually.
+There we are checking previous state validation of email and password which we shhould
+not do, in fact we must check the validity of entire form. When email or password
+get update, corresponding other field may not get upated.
+
+If one state is dependent on other state, then we must use useReducer() instead of
+useState().
+
+const [state,dispatchFn] = useReducer(reducerFn, initialState, initFn);
+
+state: The state snapshot used in the component re-render / re-evaluation cycle.
+dispatchFn: A function that can be used to dispatch a new action[i.e., triger an update
+of the state]
+reducerFn: (prevState, action) => newState.
+A function that is triggered automatically once an action is dispatched (via 
+dispatchFn()) -- it receives the latest state sanpshot and should return the new,
+updated state.
+initFn : A function to set the initial state programatically.
+Whenever a dispatch is given react call reducer function
+
+Adding Nested Properties As Dependencies To useEffect
+In the previous lecture, we used object destructuring to add object properties as 
+dependencies to useEffect().
+
+const { someProperty } = someObject;
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someProperty]);
+This is a very common pattern and approach, which is why I typically use it and why I 
+show it here (I will keep on using it throughout the course).
+
+I just want to point out, that they key thing is NOT that we use destructuring but that 
+we pass specific properties instead of the entire object as a dependency.
+
+We could also write this code and it would work in the same way.
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject.someProperty]);
+This works just fine as well!
+
+But you should avoid this code:
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject]);
+Why?
+
+Because now the effect function would re-run whenever ANY property of someObject 
+changes - not just the one property (someProperty in the above example) our effect 
+might depend on.

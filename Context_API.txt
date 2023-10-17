@@ -1,0 +1,21 @@
+In bigger app taking props and passing it through children, grand children and so on.
+This chain of passing is can be problematic. In our example passing props to navigaton
+through mainheader  components.
+
+To solve this problem we get component wide behind the scene state storage through 
+concept of context.
+
+Context must be provided using hook and second thing is to listen to the context.
+
+We need to wrap it through a components where we need it. If we need component overall
+the application we wrap it by App component, if we need it in Login component or 
+chlidren of login component,  we need to wrap it into login component.
+
+We can listen to authcomponent either using react hook or AuthContext consumer.
+Consumer takes a child which works like a function. As an argument we get context
+data.
+
+We can set dynamic context in which we do not simply pass date but also function too.
+
+Mostly props will be used. But in certain cases where passing login data to many
+component, we may use Context.
